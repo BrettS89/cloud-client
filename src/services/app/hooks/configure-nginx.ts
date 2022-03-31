@@ -15,7 +15,7 @@ const hook: Hook = context => {
   const { data: { name, type, port } } = context;
 
   NginxConfFile.create(filename, (err, conf) => {
-    const locationIndex = conf.nginx.http?.[0].server?.[0]?.length as unknown as number;
+    const locationIndex = conf.nginx.http?.[0].server?.[0].location.length;
 
     conf.nginx.http?.[0].server?.[0]._add('location', `/${name}`);
 
@@ -23,7 +23,7 @@ const hook: Hook = context => {
       const command = getReactCommand(name);
 
       conf.nginx.http?.[0].server?.[0].location?.[locationIndex]._add(command[0], command[1]);
-      conf.nginx.http?.[0].server?.[0].location?.[locationIndex]._add('index', 'index.html index.htm');
+      conf.nginx.http?.[0].server?.[0].location?.[locationIndex]._add('index', 'index.html');
     } else {
       const command = getNodeCommand(port);
 
