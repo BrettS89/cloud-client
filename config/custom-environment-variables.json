@@ -1,4 +1,5 @@
 {
   "githubUser": "GITHUB_USER",
-  "mongodb": "MONGO_URI"
+  "mongodb": "MONGO_URI",
+  "port": "PORT"
 }
