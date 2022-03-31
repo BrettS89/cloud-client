@@ -1,5 +1,6 @@
 import { Hook } from '@feathersjs/feathers';
 import { NginxConfFile } from 'nginx-conf';
+import { executeCommand } from '../../../utility';
 
 const filename = '/etc/nginx/nginx.conf';
 
@@ -15,6 +16,10 @@ const hook: Hook = context => {
   const { data: { name, type, port } } = context;
 
   NginxConfFile.create(filename, (err, conf) => {
+    conf.on('flushed', () => {
+      executeCommand('sudo systemctl restart nginx');
+    });
+
     const locationIndex = conf.nginx.http?.[0].server?.[0].location.length;
 
     conf.nginx.http?.[0].server?.[0]._add('location', `/${name}`);
