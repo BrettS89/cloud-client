@@ -20,15 +20,16 @@ const hook: Hook = async context => {
 
   try {
     await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `home/pi/apps/${targetApp.name}`);
+    data.error = 'it worked';
   } catch(e) {
     data.error = e.message;
   }
 
-  try {
-    await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
-  } catch(e) {
-    data.error = e.message;
-  }
+  // try {
+  //   await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
+  // } catch(e) {
+  //   data.error = e.message;
+  // }
 
   return context;
 };
