@@ -19,7 +19,7 @@ const hook: Hook = async context => {
   } catch(e) {}
 
   try {
-    await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `/home/pi/apps/${targetApp.name}`);
+    await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `home/pi/apps/${targetApp.name}`);
   } catch(e) {
     data.error = e.message;
   }
