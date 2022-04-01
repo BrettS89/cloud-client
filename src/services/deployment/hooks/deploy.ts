@@ -15,7 +15,7 @@ const hook: Hook = async context => {
   await executeCommand(`npx kill-port ${targetApp.port}`);
 
   try {
-    await executeCommand(`sudo rm -R /home/pi/apps/${name}`);
+    await executeCommand(`sudo rm -R /home/pi/apps/${targetApp.name}`);
   } catch(e) {}
 
   await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `/home/pi/apps/${targetApp.name}`);
