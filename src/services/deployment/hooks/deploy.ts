@@ -18,18 +18,9 @@ const hook: Hook = async context => {
     await executeCommand(`sudo rm -R /home/pi/apps/${targetApp.name}`);
   } catch(e) {}
 
-  try {
-    await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `home/pi/apps/${targetApp.name}`);
-    data.error = 'it worked';
-  } catch(e) {
-    data.error = e.message;
-  }
+  await downloadAsync(`${githubUser}/${targetApp.githubRepo}#${targetApp.branch}`, `/home/pi/apps/${targetApp.name}`);
 
-  // try {
-  //   await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
-  // } catch(e) {
-  //   data.error = e.message;
-  // }
+  await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
 
   return context;
 };
