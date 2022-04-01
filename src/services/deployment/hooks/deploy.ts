@@ -22,6 +22,8 @@ const hook: Hook = async context => {
 
   await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
 
+  executeCommand(`sudo npm --prefix /home/pi/apps/${targetApp.name} run start`);
+
   return context;
 };
 
