@@ -6,7 +6,7 @@ import { executeCommand } from '../../../utility';
 const downloadAsync = promisify(download);
 
 const hook: Hook = async context => {
-  const { app, data: { app_id } } = context;
+  const { app, data, data: { app_id } } = context;
 
   const githubUser = app.get('githubUser');
 
@@ -18,9 +18,17 @@ const hook: Hook = async context => {
     await executeCommand(`sudo rm -R /home/pi/apps/${targetApp.name}`);
   } catch(e) {}
 
-  await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `/home/pi/apps/${targetApp.name}`);
+  try {
+    await downloadAsync(`${githubUser}/${targetApp.repo}#${targetApp.branch}`, `/home/pi/apps/${targetApp.name}`);
+  } catch(e) {
+    data.error = e.message;
+  }
 
-  await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
+  try {
+    await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
+  } catch(e) {
+    data.error = e.message;
+  }
 
   return context;
 };
