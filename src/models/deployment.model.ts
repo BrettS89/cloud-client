@@ -13,9 +13,6 @@ export default function (app: Application): Model<any> {
     appId: {
       type: Schema.Types.ObjectId,
     },
-    error: {
-      type: String,
-    }
   }, {
     timestamps: true
   });

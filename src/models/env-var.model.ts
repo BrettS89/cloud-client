@@ -14,9 +14,10 @@ export default function (app: Application): Model<any> {
       type: String,
       required: true
     },
-    envVars: [
-      String,
-    ],
+    envVar: {
+      type: String,
+      required: true,
+    }
   }, {
     timestamps: true
   });

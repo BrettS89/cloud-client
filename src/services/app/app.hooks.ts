@@ -18,9 +18,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [
-      createEnvVars,
-    ],
+    create: [],
     update: [],
     patch: [],
     remove: []

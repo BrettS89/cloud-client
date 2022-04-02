@@ -9,14 +9,14 @@ const downloadAsync = promisify(download);
 const addEnvVars = async (app: Application, appToDeploy: Record<string, any>) => {
   const { name, _id } = appToDeploy;
 
-  const { envVars } = (await app
+  const { data } = await app
     .service('env-var')
     .find({
       appId: _id,
-    }))[0];
+    });
 
-  const envData = envVars.reduce((acc: string, curr: string) => {
-    acc += `${curr}\n`;
+  const envData = data.reduce((acc: string, curr: Record<string, any>) => {
+    acc += `${curr.envVar}\n`;
     return acc;
   }, '');
 
