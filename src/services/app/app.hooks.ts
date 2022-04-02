@@ -1,5 +1,4 @@
 import configureNginx from './hooks/configure-nginx';
-import createEnvVars from './hooks/create-env-vars';
 
 export default {
   before: {
