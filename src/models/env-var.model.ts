@@ -1,4 +1,4 @@
-// deployment-model.ts - A mongoose model
+// env-var-model.ts - A mongoose model
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
@@ -6,16 +6,17 @@ import { Application } from '../declarations';
 import { Model, Mongoose } from 'mongoose';
 
 export default function (app: Application): Model<any> {
-  const modelName = 'deployment';
+  const modelName = 'envVar';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema({
     appId: {
-      type: Schema.Types.ObjectId,
-    },
-    error: {
       type: String,
-    }
+      required: true
+    },
+    envVars: [
+      String,
+    ],
   }, {
     timestamps: true
   });

@@ -1,14 +1,11 @@
-import configureNginx from './hooks/configure-nginx';
-import createEnvVars from './hooks/create-env-vars';
+import { HooksObject } from '@feathersjs/feathers';
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [
-      configureNginx,
-    ],
+    create: [],
     update: [],
     patch: [],
     remove: []
@@ -18,9 +15,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [
-      createEnvVars,
-    ],
+    create: [],
     update: [],
     patch: [],
     remove: []

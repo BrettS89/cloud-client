@@ -1,28 +1,48 @@
+import { writeFileSync } from 'fs';
 import download from 'download-git-repo';
 import { promisify } from 'util';
-import { Hook } from '@feathersjs/feathers';
+import { Application, Hook } from '@feathersjs/feathers';
 import { executeCommand } from '../../../utility';
 
 const downloadAsync = promisify(download);
 
+const addEnvVars = async (app: Application, appToDeploy: Record<string, any>) => {
+  const { name, _id } = appToDeploy;
+
+  const { envVars } = (await app
+    .service('env-var')
+    .find({
+      appId: _id,
+    }))[0];
+
+  const envData = envVars.reduce((acc: string, curr: string) => {
+    acc += `${curr}\n`;
+    return acc;
+  }, '');
+
+  writeFileSync(`/home/pi/apps/${name}/.env`, envData);
+};
+
 const hook: Hook = async context => {
-  const { app, data, data: { app_id } } = context;
+  const { app, data: { appId } } = context;
 
   const githubUser = app.get('githubUser');
 
-  const targetApp = await app.service('app').get(app_id); 
+  const appToDeploy = await app.service('app').get(appId); 
 
-  await executeCommand(`npx kill-port ${targetApp.port}`);
+  await executeCommand(`npx kill-port ${appToDeploy.port}`);
 
   try {
-    await executeCommand(`sudo rm -R /home/pi/apps/${targetApp.name}`);
+    await executeCommand(`sudo rm -R /home/pi/apps/${appToDeploy.name}`);
   } catch(e) {}
 
-  await downloadAsync(`${githubUser}/${targetApp.githubRepo}#${targetApp.branch}`, `/home/pi/apps/${targetApp.name}`);
+  await downloadAsync(`${githubUser}/${appToDeploy.githubRepo}#${appToDeploy.branch}`, `/home/pi/apps/${appToDeploy.name}`);
 
-  await executeCommand(`cd /home/pi/apps/${targetApp.name} && npm i`);
+  await addEnvVars(app, appToDeploy);
 
-  executeCommand(`sudo npm --prefix /home/pi/apps/${targetApp.name} run start`);
+  await executeCommand(`cd /home/pi/apps/${appToDeploy.name} && npm i`);
+
+  executeCommand(`sudo npm --prefix /home/pi/apps/${appToDeploy.name} run start`);
 
   return context;
 };
