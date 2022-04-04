@@ -13,7 +13,13 @@ const getNodeCommand = (port: number): string[] => {
 };
 
 const hook: Hook = context => {
-  const { data: { name, type, port } } = context;
+  const { app, data: { name, type, port } } = context;
+
+  const env = app.get('env');
+
+  if (env === 'development') {
+    return context;
+  }
 
   NginxConfFile.create(filename, (err, conf) => {
     conf.on('flushed', () => {

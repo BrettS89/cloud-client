@@ -36,7 +36,7 @@ const hook: Hook = async context => {
     await executeCommand(`sudo rm -R /home/pi/apps/${appToDeploy.name}`);
   } catch(e) {}
 
-  await downloadAsync(`${githubUser}/${appToDeploy.githubRepo}#${appToDeploy.branch}`, `/home/pi/apps/${appToDeploy.name}`);
+  await downloadAsync(`${githubUser}/${appToDeploy.repo}#${appToDeploy.branch}`, `/home/pi/apps/${appToDeploy.name}`);
 
   await addEnvVars(app, appToDeploy);
 

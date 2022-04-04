@@ -19,7 +19,7 @@ export default function (app: Application): Model<any> {
       required: true,
       enum: ['node', 'react'],
     },
-    githubRepo: {
+    repo: {
       type: String,
       required: true,
     },
@@ -27,14 +27,10 @@ export default function (app: Application): Model<any> {
       type: String,
       required: true,
     },
-    startScript: {
-      type: String,
-      required: true,
-    },
     port: {
       type: Number,
       required: true,
-    }
+    },
   }, {
     timestamps: true
   });

@@ -1,5 +1,6 @@
 {
   "githubUser": "GITHUB_USER",
   "mongodb": "MONGO_URI",
-  "port": "PORT"
+  "port": "PORT",
+  "env": "NODE_ENV"
 }
