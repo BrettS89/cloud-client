@@ -42,7 +42,13 @@ const hook: Hook = async context => {
 
   await executeCommand(`cd /home/pi/apps/${appToDeploy.name} && npm i`);
 
-  executeCommand(`sudo npm --prefix /home/pi/apps/${appToDeploy.name} run start`);
+  if (appToDeploy.type === 'node') {
+    executeCommand(`sudo npm --prefix /home/pi/apps/${appToDeploy.name} run start`);
+  } else {
+    executeCommand(`sudo npm --prefix /home/pi/apps/${appToDeploy.name} run build`);
+  }
+
+  
 
   return context;
 };
