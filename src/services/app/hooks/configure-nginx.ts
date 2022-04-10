@@ -5,7 +5,7 @@ import { executeCommand } from '../../../utility';
 const filename = '/etc/nginx/nginx.conf';
 
 const getReactCommand = (name: string): string[] => {
-  return ['alias', `/home/pi/apps/${name}/build/`];
+  return ['alias', `/home/pi/apps/${name}/build`];
 };
 
 const getNodeCommand = (port: number): string[] => {
@@ -14,6 +14,10 @@ const getNodeCommand = (port: number): string[] => {
 
 const hook: Hook = context => {
   const { app, data: { name, type, port } } = context;
+
+  if (![name, port, type].every(v => Boolean(v))) {
+    throw new Error('Missing required fields');
+  }
 
   const env = app.get('env');
 
@@ -34,7 +38,7 @@ const hook: Hook = context => {
       const command = getReactCommand(name);
 
       conf.nginx.http?.[0].server?.[0].location?.[locationIndex]._add(command[0], command[1]);
-      conf.nginx.http?.[0].server?.[0].location?.[locationIndex]._add('index', 'index.html');
+      conf.nginx.http?.[0].server?.[0].location?.[locationIndex]._add('try_files', `$uri $uri/ /${name}/index.html`);
     } else {
       const command = getNodeCommand(port);
 

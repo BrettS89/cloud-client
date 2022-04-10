@@ -48,6 +48,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "download-git-repo": "^3.0.2",
+    "feathers-hooks-common": "^5.0.6",
     "feathers-mongoose": "^8.5.1",
     "helmet": "^4.6.0",
     "mongodb-core": "^3.2.7",

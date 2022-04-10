@@ -1,4 +1,7 @@
+import { fastJoin } from 'feathers-hooks-common';
+import resolvers from './app.resolvers';
 import configureNginx from './hooks/configure-nginx';
+import addPortEnvVar from './hooks/add-port-env-var';
 
 export default {
   before: {
@@ -14,10 +17,12 @@ export default {
   },
 
   after: {
-    all: [],
+    all: [fastJoin(resolvers, ctx => ctx.params.resolve || {})],
     find: [],
     get: [],
-    create: [],
+    create: [
+      addPortEnvVar,
+    ],
     update: [],
     patch: [],
     remove: []
