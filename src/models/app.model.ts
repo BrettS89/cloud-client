@@ -29,7 +29,6 @@ export default function (app: Application): Model<any> {
     },
     port: {
       type: Number,
-      required: true,
     },
   }, {
     timestamps: true

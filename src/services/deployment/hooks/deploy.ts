@@ -30,7 +30,9 @@ const hook: Hook = async context => {
 
   const appToDeploy = await app.service('app').get(appId); 
 
-  await executeCommand(`npx kill-port ${appToDeploy.port}`);
+  if (appToDeploy.type === 'node') {
+    await executeCommand(`npx kill-port ${appToDeploy.port}`);
+  }
 
   try {
     await executeCommand(`sudo rm -R /home/pi/apps/${appToDeploy.name}`);
