@@ -13,6 +13,14 @@ export default function (app: Application): Model<any> {
     appId: {
       type: Schema.Types.ObjectId,
     },
+    status: {
+      type: String,
+      default: 'success',
+      enum: [
+        'success',
+        'fail',
+      ],
+    },
   }, {
     timestamps: true
   });

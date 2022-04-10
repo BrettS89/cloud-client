@@ -30,6 +30,20 @@ export default function (app: Application): Model<any> {
     port: {
       type: Number,
     },
+    status: {
+      type: String,
+      required: true,
+      default: 'Not deployed',
+      enum: [
+        'Not deployed',
+        'Deployed',
+        'Deploying...',
+        'Error',
+      ],
+    },
+    error: {
+      type: String,
+    },
   }, {
     timestamps: true
   });
