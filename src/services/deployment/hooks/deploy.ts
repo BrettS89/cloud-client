@@ -12,7 +12,9 @@ const addEnvVars = async (app: Application, appToDeploy: Record<string, any>) =>
   const { data } = await app
     .service('env-var')
     .find({
-      appId: _id,
+      query: {
+        appId: _id,
+      },
     });
 
   const envData = data.reduce((acc: string, curr: Record<string, any>) => {
