@@ -32,7 +32,6 @@ export default function (app: Application): Model<any> {
     },
     status: {
       type: String,
-      required: true,
       default: 'Not deployed',
       enum: [
         'Not deployed',
